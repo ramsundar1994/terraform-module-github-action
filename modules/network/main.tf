@@ -43,16 +43,6 @@ resource "azurerm_subnet" "main" {
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = [var.subnet_prefix]
-
-  delegation {
-    name = "delegation"
-    service_delegation {
-      name = "Microsoft.Network/virtualNetworks/subnets"
-      actions = [
-        "Microsoft.Network/virtualNetworks/subnets/action",
-      ]
-    }
-  }
 }
 
 resource "azurerm_subnet_network_security_group_association" "main" {

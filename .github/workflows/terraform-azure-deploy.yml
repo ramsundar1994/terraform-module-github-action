@@ -78,6 +78,8 @@ jobs:
         run: |
           terraform plan -var-file=vars/${{ github.event.inputs.environment }}.tfvars -out=plan-${{ github.event.inputs.environment }}.tfplan
 
+      # lockfile upload removed — not required
+
       - name: Upload Plan Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -107,6 +109,13 @@ jobs:
         with:
           terraform_version: 1.5.0
 
+
+      # lockfile download removed — not required
+
+      - name: Terraform Init
+        working-directory: .
+        run: |
+          terraform init -backend-config=environments/backend-${{ github.event.inputs.environment }}.conf
 
       - name: Download Plan Artifact
         uses: actions/download-artifact@v4

@@ -36,7 +36,7 @@ jobs:
           terraform init -backend-config=environments/backend-${{ github.event.inputs.environment }}.conf
 
       - name: Terraform Validate
-        working-directory: terraform-module-github-action
+        working-directory: .
         run: |
           terraform validate
 
@@ -65,7 +65,7 @@ jobs:
           terraform init -backend-config=environments/backend-${{ github.event.inputs.environment }}.conf
 
       - name: Terraform Plan
-        working-directory: terraform-module-github-action
+        working-directory: .
         env:
           # Choose the appropriate VM password secret for the selected environment.
           TF_VAR_vm_admin_password: ${{ github.event.inputs.environment == 'prod' && secrets.VM_ADMIN_PASSWORD_PROD || secrets.VM_ADMIN_PASSWORD_NONPROD }}

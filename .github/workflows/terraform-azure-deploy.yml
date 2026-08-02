@@ -31,7 +31,7 @@ jobs:
           terraform_version: 1.5.0
 
       - name: Terraform Init
-        working-directory: terraform-module-github-action
+        working-directory: .
         run: |
           terraform init -backend-config=environments/backend-${{ github.event.inputs.environment }}.conf
 
@@ -60,7 +60,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Terraform Init
-        working-directory: terraform-module-github-action
+        working-directory: .
         run: |
           terraform init -backend-config=environments/backend-${{ github.event.inputs.environment }}.conf
 
@@ -76,7 +76,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: terraform-plan-${{ github.event.inputs.environment }}
-          path: terraform-module-github-action/plan-${{ github.event.inputs.environment }}.tfplan
+          path: plan-${{ github.event.inputs.environment }}.tfplan
 
   apply:
     name: Terraform Apply
@@ -108,7 +108,7 @@ jobs:
           path: .
 
       - name: Terraform Apply
-        working-directory: terraform-module-github-action
+        working-directory: .
         env:
           TF_VAR_vm_admin_password: ${{ github.event.inputs.environment == 'prod' && secrets.VM_ADMIN_PASSWORD_PROD || secrets.VM_ADMIN_PASSWORD_NONPROD }}
         run: |
